@@ -1,5 +1,7 @@
 package com.example.processlifecycleownerpersistedstate
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -18,6 +20,7 @@ class ExampleUnitTest {
     fun testLaunchActivity() {
         val controller = Robolectric.buildActivity(MainActivity::class.java)
             .create().start().resume().visible()
+        assertEquals(Lifecycle.State.RESUMED, ProcessLifecycleOwner.get().lifecycle.currentState)
         controller.pause().stop().destroy()
     }
 }
