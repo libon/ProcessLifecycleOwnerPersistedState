@@ -2,9 +2,11 @@ package com.example.processlifecycleownerpersistedstate
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.ProcessLifecycleTrojan
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -16,6 +18,17 @@ import org.robolectric.RobolectricTestRunner
  */
 @RunWith(RobolectricTestRunner::class)
 class ExampleUnitTest {
+
+    @Before
+    fun setup() {
+        ProcessLifecycleTrojan.setup()
+    }
+
+    @After
+    fun tearDown() {
+        ProcessLifecycleTrojan.tearDown()
+    }
+
     @Test
     fun testLaunchActivity() {
         val controller = Robolectric.buildActivity(MainActivity::class.java)
