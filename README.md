@@ -64,4 +64,5 @@ Steps to reproduce the various issues:
 * Expected behavior: the tests pass
 * Actual behavior: `IllegalAccessException` in `ProcessLifecycleTrojan.tearDown()`
 
+This problem is avoided by using `ReflectionHelpers.callConstructor()` and `ReflectionHelpers.setStaticField()`.
 

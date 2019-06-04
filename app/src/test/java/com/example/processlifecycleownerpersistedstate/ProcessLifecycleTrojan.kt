@@ -5,6 +5,7 @@ package androidx.lifecycle
 
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
+import org.robolectric.util.ReflectionHelpers
 
 /**
  * We need the process-level lifecycle states to work (our app queries the state and has logic which depends on it)
@@ -52,13 +53,8 @@ object ProcessLifecycleTrojan {
         // Hackity hackity hack hack hack
         // The androidx process lifecycle classes maintain static state that needs to be reset
         // between tests.
-        val sInstanceField = ProcessLifecycleOwner::class.java.getDeclaredField("sInstance")
-        sInstanceField.isAccessible = true
-        val constructor = ProcessLifecycleOwner::class.java.getDeclaredConstructor()
-        constructor.isAccessible = true
-
-        val instance = constructor.newInstance()
-        sInstanceField.set(null, instance)
+        val instance = ReflectionHelpers.callConstructor(ProcessLifecycleOwner::class.java)
+        ReflectionHelpers.setStaticField(ProcessLifecycleOwner::class.java, "sInstance", instance)
     }
 }
 
